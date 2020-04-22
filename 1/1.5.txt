@@ -1,0 +1,32 @@
+applicative-order evaluation:
+    (test 0 (p))
+expands to
+    (if (= 0 0) 0 (p))
+reduces to
+    (if #t 0 (p))
+reduces to
+    0
+
+normal-order evaluation:
+    (test 0 (p))
+expands to
+    (if (= 0 0) 0 (p))
+but, we need to expand (p) to
+    (if (= 0 0) 0 (p))
+                  ...
+                  (p)
+                  (p)
+                  ...
+
+Using applicative-order, the expression evaluates to 0, as the predicate yields
+true, and so the conditional's value is the consequent, 0. The alternative, (p),
+is never evaluated and thus never expanded.
+
+Using normal-order, the expression causes an infinite recursion, as we keep
+trying to expand (p), but the definition of (p) yields itself. We will never
+reach a result since we can never replace (p) with a primitive, yet we're
+obligated to reach a primitive *before* we evaluate any other part of the
+expression.
+
+Applicative-order prevents this situation because `if` short-circuits, so the
+interpreter never tries to expand (p).

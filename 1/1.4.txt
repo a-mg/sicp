@@ -1,0 +1,3 @@
+The procedure adds a to the absolute value of b. It chooses the operator to
+apply to a and b by checking the sign of b in the if statement. The if
+expression's value is a primitive procedure which is then applied to a and b.
