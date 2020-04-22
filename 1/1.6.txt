@@ -1,0 +1,10 @@
+With `new-if`, Alyssa will not be able to compute any square roots at all! This
+is because the interpreter, when attempting to evaluate `new-if`, will evaluate
+both the then-clause and the else-clause -- it doesn't consider the else-clause
+to be an *optional* branch, instead "understanding" it as an argument to the
+procedure `new-if` which must be evaluated to determine the value of `new-if`.
+This causes an infinite recursion since `sqrt-iter` will *always* call itself,
+which prevents `sqrt` from ever returning a value.
+
+The built-in `if` special form avoids this by only evaluating the clause we
+want, based on the result of the predicate.
